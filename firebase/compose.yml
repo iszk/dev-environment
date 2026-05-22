@@ -1,0 +1,22 @@
+services:
+
+  firebase:
+    container_name: firebase
+    restart: unless-stopped
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./.firebaserc:/firebase/.firebaserc
+      - ./firebase.json:/firebase/firebase.json
+    tty: true
+    working_dir: /firebase
+    command: firebase emulators:start
+    networks:
+      - firebase
+
+networks:
+  firebase:
+    name: firebase
+    external: true
